@@ -1,0 +1,21 @@
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    background: rgb(43,193,255);
+    background: linear-gradient(0deg, rgba(43,193,255,1) 0%, rgba(255,255,255,1) 90%);
+}
+
+.socials-logo{
+    display: flex;
+    padding-top: 40px;
+    gap: 10px;
+}
+
+.copyrights{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
