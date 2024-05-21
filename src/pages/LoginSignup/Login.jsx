@@ -6,8 +6,8 @@ export const Login = () => {
   const [action, setAction] = useState("Login");
   const [formData, setFormData] = useState({
     username: "",
-    password: "",
-    email: ""
+    email: "",
+    password: ""
   })
 
   const changeHandler = (e) => {
@@ -17,11 +17,12 @@ export const Login = () => {
   const loggin = async () => {
     console.log("Login function executed", formData);
     let responseData;
-    await fetch('http://localhost:4000/login',{
+    await fetch('http://localhost:8888/api/auth/login',{
       method: 'POST',
       headers:{
-        Accept: 'application/from-data',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Referrer-Policy': 'no-referer-when-downgrade'
       },
       body: JSON.stringify(formData),
     }).then((response)=>response.json()).then((data)=>responseData=data)
@@ -39,7 +40,7 @@ export const Login = () => {
   const signup = async () => {
     console.log("Signup function executed", formData);
     let responseData;
-    await fetch('http://localhost:4000/signup',{
+    await fetch('http://localhost:8888/api/auth/signup',{
       method: 'POST',
       headers:{
         Accept: 'application/from-data',
