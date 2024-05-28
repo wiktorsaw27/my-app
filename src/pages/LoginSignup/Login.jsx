@@ -55,14 +55,14 @@ export const Login = () => {
       await fetch('http://localhost:8888/api/auth/register',{
       method: 'POST',
       headers:{
-        'Accept': 'application/json',
+        'Accept': 'text/plain',
         'Content-Type': 'application/json',
         'Referrer-Policy': 'no-referer-when-downgrade'
       },
       body: JSON.stringify(formData),
-    }).then((response)=>httpResponse=response.json()).then((data)=>responseData=data);
+    }).then((response)=>httpResponse=response).then((data)=>responseData=data);
     console.log('Response:', httpResponse);
-    console.log('Response.body:', httpResponse.body.json());
+    console.log('Response.body:', httpResponse.body);
 
     if(httpResponse.ok) {
       window.location.replace("/");
