@@ -13,7 +13,7 @@ export const Cart = () => {
 
   return (
     <div className='cart'>
-        <div>
+        <div className='cart-title'>
             <h1>Twój Koszyka</h1>
         </div>
         <div className="cart-items">

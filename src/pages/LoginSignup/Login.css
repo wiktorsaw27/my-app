@@ -56,6 +56,7 @@
 .login-have span {
     color: #ff4141;
     font-weight: 600;
+    cursor: pointer;
 }
 .login-agree {
     display: flex;
@@ -66,3 +67,28 @@
     font-size: 18px;
     font-weight: 500;
 }
+
+
+@media(max-width:800px){
+ .login-container {
+    width: 400px;
+    height: 600px;
+    padding: 30px 50px;
+ }
+ .login-container button{
+    margin-left: 38px;
+    width: 333px;
+ }
+}
+@media(max-width:512px){
+    .login-container {
+       width: 300px;
+       height: 600px;
+       padding: 30px 50px;
+       margin-top: -30px;
+    }
+    .login-container button{
+       margin-left: 30px;
+       width: 250px;
+    }
+   }

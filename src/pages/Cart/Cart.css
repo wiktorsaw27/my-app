@@ -4,6 +4,12 @@
     justify-content: center;
     align-items: center;
 }
+.cart-title{
+    width: 100%;
+    text-align: center;
+    height: 100px;
+    background: linear-gradient(180deg, rgb(255, 170, 43) 0%, rgba(255,255,255,1) 90%);
+}
 .cart-item{
     width: 700px;
     height: 250px;
@@ -37,4 +43,16 @@
     border-radius: 8px;
     margin: 10px;
     cursor: pointer;
+}
+
+
+@media(max-width:800px){
+    .cart-item{
+        width: 100%;
+    }
+}
+@media(max-width:512px){
+    .cart-item{
+        width: 90%;
+    }
 }
