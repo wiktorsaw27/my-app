@@ -6,8 +6,9 @@ export const Login = () => {
   const [action, setAction] = useState("Login");
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
-    email: ""
+    matchingPassword: ""
   })
 
   const changeHandler = (e) => {
@@ -17,43 +18,57 @@ export const Login = () => {
   const loggin = async () => {
     console.log("Login function executed", formData);
     let responseData;
-    await fetch('http://localhost:4000/login',{
+    let httpResponse
+    await fetch('http://localhost:8888/api/auth/login',{
       method: 'POST',
       headers:{
-        Accept: 'application/from-data',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Referrer-Policy': 'no-referer-when-downgrade'
       },
       body: JSON.stringify(formData),
-    }).then((response)=>response.json()).then((data)=>responseData=data)
+    }).then((response)=>httpResponse=response.json()).then((data)=>responseData=data);
+    console.log('Response: ', httpResponse);
+    console.log('responseData: ', responseData);
+    if(httpResponse.ok) {
+        console.log("all good");
+    } else {
+        console.log("not so good");
+    }
 
-    if(responseData.success) {
+    if(responseData.token) {
       localStorage.setItem('auth-token', responseData.token);
       window.location.replace("/");
+    } else if(responseData.message) {
+      // api responded with an error = {"status":"<s>", "message":"<m>"}
+      alert(responseData.message);
+      // console.log("info from else", responseData);
     }
-    else{
-      alert(responseData.errors);
-    }
+    else{ alert("500 Internal Server Error"); }
     
   }
 
   const signup = async () => {
     console.log("Signup function executed", formData);
+    let httpResponse;
     let responseData;
-    await fetch('http://localhost:4000/signup',{
+      await fetch('http://localhost:8888/api/auth/register',{
       method: 'POST',
       headers:{
-        Accept: 'application/from-data',
+        'Accept': 'text/plain',
         'Content-Type': 'application/json',
+        'Referrer-Policy': 'no-referer-when-downgrade'
       },
       body: JSON.stringify(formData),
-    }).then((response)=>response.json()).then((data)=>responseData=data)
+    }).then((response)=>httpResponse=response).then((data)=>responseData=data);
+    console.log('Response:', httpResponse);
+    console.log('Response.body:', httpResponse.body);
 
-    if(responseData.success) {
-      localStorage.setItem('auth-token', responseData.token);
+    if(httpResponse.ok) {
       window.location.replace("/");
     }
     else{
-      alert(responseData.errors);
+      alert(httpResponse.body.json());
     }
   }
 
@@ -65,6 +80,7 @@ export const Login = () => {
                 {action==='Sign up'?<input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder='Twoję Imię'/>:<></>}
                 <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder='Adres Email'/>
                 <input name='password' value={formData.password} onChange={changeHandler} type="password" placeholder='Hasło'/>
+                {action==='Sign up'?<input name='matchingPassword' onChange={changeHandler} type="password" placeholder='Powtórz hasło'/>:<></>}
             </div>
             <button onClick={()=>{action==='Login'?loggin():signup()}}>Kontynuuj</button>
             {action==='Sign up'?

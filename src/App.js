@@ -7,6 +7,7 @@ import { Cart } from './pages/Cart/Cart';
 import { ShopContextProvider } from './Context/ShopContext';
 import { Footer } from './Components/Footer';
 import { Login } from './pages/LoginSignup/Login';
+import VerifyRegistrationPage from './pages/LoginSignup/VerifyRegistrationPage';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
             <Route path='/' element={<Shop/>}/>
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/login' element={<Login/>}/>
+            <Route path="/verify-registration" element={<VerifyRegistrationPage/>}/>
           </Routes>
           <Footer/>
         </BrowserRouter>

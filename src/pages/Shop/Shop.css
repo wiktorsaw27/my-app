@@ -59,3 +59,26 @@
     color: white;
     cursor: pointer;
 }
+
+@media(max-width:1500px){
+    .products {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media(max-width:1024px){
+    .products {
+        grid-template-columns: 1fr;
+    }
+}
+@media(max-width:512px){
+    .product{
+        margin: 50px;
+    }
+    .product img{
+        width: 100%;
+        align-items: center;
+    }
+    .shop-title h2{
+        font-size: 33px;
+    }
+}
