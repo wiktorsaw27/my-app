@@ -28,7 +28,11 @@ const CheckoutForm = ({ cartItems, totalAmount }) => {
             // Wys³anie danych karty i zamówienia do backendu
             const response = await fetch('/api/stripe/process-payment', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Referrer-Policy': 'no-referer-when-downgrade'
+                },
                 body: JSON.stringify({ 
                     email,
                     cartItems,
@@ -42,13 +46,14 @@ const CheckoutForm = ({ cartItems, totalAmount }) => {
             });
 
             const data = await response.json();
-            if (data.error) {
-                setError(data.error);
+            if (data.status !== 'success') {
+                setError(data.status);
+                // error response: {"status": "<error name (e.g. NOT FOUND)>", "message": "<error message>"}
                 setLoading(false);
                 return;
             }
 
-            if (data.paymentIntentStatus === 'succeeded') {
+            if (data.status === 'success') {
                 alert('Payment successful!');
                 setLoading(false);
             }
