@@ -38,7 +38,6 @@ const CheckoutForm = ({ cartItems, totalAmount, closeModal }) => {
         setLoading(true);
 
         try {
-<<<<<<< HEAD
             // Create a payment method
             const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
                 type: "card",
@@ -47,37 +46,10 @@ const CheckoutForm = ({ cartItems, totalAmount, closeModal }) => {
 
             if (paymentMethodError) {
                 setError(paymentMethodError.message);
-=======
-            // Wys³anie danych karty i zamówienia do backendu
-            const response = await fetch('/api/stripe/process-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Referrer-Policy': 'no-referer-when-downgrade'
-                },
-                body: JSON.stringify({ 
-                    email,
-                    cartItems,
-                    card: {
-                        number: cardElement.value.cardNumber,
-                        exp_month: cardElement.value.expMonth,
-                        exp_year: cardElement.value.expYear,
-                        cvc: cardElement.value.cvc
-                    }
-                }),
-            });
-
-            const data = await response.json();
-            if (data.status !== 'success') {
-                setError(data.status);
-                // error response: {"status": "<error name (e.g. NOT FOUND)>", "message": "<error message>"}
->>>>>>> ea613dd76df33c52797e1f90d6ebb8d79b4a2aa2
                 setLoading(false);
                 return;
             }
 
-<<<<<<< HEAD
             // Call the backend to create a payment intent
             const response = await fetch("/api/stripe/create-payment-intent", {
                 method: "POST",
@@ -87,16 +59,15 @@ const CheckoutForm = ({ cartItems, totalAmount, closeModal }) => {
                 body: JSON.stringify({ email, cartItems, totalAmount }),
             });
 
-            const { clientSecret, error: backendError } = await response.json();
-            if (backendError) {
-                setError(backendError);
-=======
-            if (data.status === 'success') {
-                alert('Payment successful!');
->>>>>>> ea613dd76df33c52797e1f90d6ebb8d79b4a2aa2
+            const responseJson = await response.json();
+
+            if (responseJson.error) {
+                setError(responseJson.error);
                 setLoading(false);
                 return;
             }
+
+            const { clientSecret } = responseJson;
 
             // Confirm the payment with the client secret
             const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
