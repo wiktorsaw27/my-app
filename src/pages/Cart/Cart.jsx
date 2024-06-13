@@ -50,13 +50,21 @@ const CheckoutForm = ({ cartItems, totalAmount, closeModal }) => {
                 return;
             }
 
+            // Transform cartItems to a list of item IDs
+            const items = [];
+            Object.keys(cartItems).forEach(key => {
+                for (let i = 0; i < cartItems[key]; i++) {
+                    items.push(Number(key));
+                }
+            });
+
             // Call the backend to create a payment intent
             const response = await fetch("/api/stripe/create-payment-intent", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, cartItems, totalAmount }),
+                body: JSON.stringify({ email, items, totalAmount }),
             });
 
             const responseJson = await response.json();
@@ -87,7 +95,7 @@ const CheckoutForm = ({ cartItems, totalAmount, closeModal }) => {
                 await fetch('/api/stripe/payment-success', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, cartItems }),
+                    body: JSON.stringify({ email, items }),
                 });
 
                 setLoading(false);
